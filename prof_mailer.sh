@@ -1,9 +1,4 @@
-echo "Choose A Class:"
-cat -n "lists/classList.txt" # Display all classes in classList.txt
-read input # Waiting for input
-### For when prof will add a class
-extraClass1="Exists!";extraClass2="Exists!";extraClass3="Exists!";extraClass4="Class does not exist yet!";extraClass5="Class does not exist yet!";extraClass6="Class does not exist yet!";extraClass7="Class does not exist yet!";extraClass8="Class does not exist yet!";extraClass9="Class does not exist yet!";extraClass10="Class does not exist yet!"
-file=''
+getStudentFile () {
 case $input in
 	1)
 	if [ "$extraClass1" != "Class does not exist yet!" ]; then
@@ -14,7 +9,7 @@ case $input in
     fi
 	;;
 	2)
-	if [ "$extraClass2" != "Class does not exist yet!" ]; then
+    if [ "$extraClass2" != "Class does not exist yet!" ]; then
         file=`sed -n '2p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
@@ -89,4 +84,12 @@ case $input in
 	echo "Teachers can only teach up to 10 classes."
 	;;
 esac
+}
+echo "Choose A Class:"
+cat -n "lists/classList.txt" # Display all classes in classList.txt
+read input # Waiting for input
+### For when prof will add a class
+extraClass1="Exists!";extraClass2="Exists!";extraClass3="Exists!";extraClass4="Class does not exist yet!";extraClass5="Class does not exist yet!";extraClass6="Class does not exist yet!";extraClass7="Class does not exist yet!";extraClass8="Class does not exist yet!";extraClass9="Class does not exist yet!";extraClass10="Class does not exist yet!"
+getStudentFile 
 echo $file
+
