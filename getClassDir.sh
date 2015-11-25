@@ -1,96 +1,161 @@
+getNextClass() {
+index=0
+for i in "${extraClass[@]}"; do
+	if [ "$i" = "Class does not exist yet!" ]; then
+		extraClass[$index]="Exists!" # Change class to Exists!
+		break; 
+	fi
+	index=`expr $index + 1` # Increment
+done
+}
+
+createClass() {
+echo "Enter class (ex.. cs101_01):"
+read classNum
+echo "Enter class title (ex.. Intro to Computers):"
+read classTitle
+getNextClass # Will get the next available class, $extraClass(X) 
+# $index will contain the next available class in array extraClass[x]
+newClass="$classNum"_StudentList.txt # Name of file
+touch  "lists/"$newClass"" # Create NEW student file for $newClass
+echo "$classNum -$classTitle" >> "lists/classList.txt" # Append data to file
+showClasses
+}
+
 getStudentFile () {
 case $input in
 	1)
-	if [ "$extraClass1" != "Class does not exist yet!" ]; then
+	if [ "${extraClass[0]}" != "Class does not exist yet!" ]; then
         file=`sed -n '1p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected 
     else
-        echo $extraClass1
+        echo ${extraClass[0]}
     fi
 	;;
 	2)
-    if [ "$extraClass2" != "Class does not exist yet!" ]; then
+    if [ "${extraClass[1]}" != "Class does not exist yet!" ]; then
         file=`sed -n '2p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
-        echo $extraClass2
+        echo ${extraClass[1]}
     fi
 	;;
     3)
-	if [ "$extraClass3" != "Class does not exist yet!" ]; then
+	if [ "${extraClass[2]}" != "Class does not exist yet!" ]; then
         file=`sed -n '3p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
-        echo $extraClass3
+        echo ${extraClass[2]}
      fi
 	;;
 	4)
-    if [ "$extraClass4" != "Class does not exist yet!" ]; then  
+    if [ "${extraClass[3]}" != "Class does not exist yet!" ]; then  
 		file=`sed -n '4p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
     	file="lists/"$file"_StudentList.txt" # Display file selected
 	else
-		echo $extraClass4
+		echo ${extraClass[3]}
 	fi
 	;;
 	5)
-	if [ "$extraClass5" != "Class does not exist yet!" ]; then
+	if [ "${extraClass[4]}" != "Class does not exist yet!" ]; then
         file=`sed -n '5p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
-        echo $extraClass5
+        echo ${extraClass[4]}
     fi
 	;;
 	6)
-	if [ "$extraClass6" != "Class does not exist yet!" ]; then
-        file=`sed -n '6p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1i
+	if [ "${extraClass[5]}" != "Class does not exist yet!" ]; then
+        file=`sed -n '6p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
-        echo $extraClass6
+        echo ${extraClass[5]}
     fi
 	;;
 	7)
-	if [ "$extraClass7" != "Class does not exist yet!" ]; then
+	if [ "${extraClass[6]}" != "Class does not exist yet!" ]; then
         file=`sed -n '7p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
-        echo $extraClass7
+        echo ${extraClass[6]}
     fi
 	;;
 	8)
-	if [ "$extraClass8" != "Class does not exist yet!" ]; then
+	if [ "${extraClass[7]}" != "Class does not exist yet!" ]; then
         file=`sed -n '8p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
-        echo $extraClass8
+        echo ${extraClass[7]}
     fi	
 	;;
 	9)
-	if [ "$extraClass9" != "Class does not exist yet!" ]; then
+	if [ "${extraClass[8]}" != "Class does not exist yet!" ]; then
         file=`sed -n '9p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
-        echo $extraClass9
+        echo ${extraClass[8]}
     fi
 	;;
 	10)
-	if [ "$extraClass10" != "Class does not exist yet!" ]; then
+	if [ "${extraClass[9]}" != "Class does not exist yet!" ]; then
         file=`sed -n '10p' "lists/classList.txt" | cut -d ' ' -f1` # Field 1
         file="lists/"$file"_StudentList.txt" # Display file selected
     else
-        echo $extraClass10
+        echo ${extraClass[9]}
     fi
+	;;
+	[nN])
+	createClass
 	;;
 	*)
 	echo "Teachers can only teach up to 10 classes."
 	;;
 esac
 }
-echo "Choose A Class:"
+
+showClasses() {
+echo "Choose A Class, or enter (n/N) to create a new class:"
 cat -n "lists/classList.txt" # Display all classes in classList.txt
-read input # Waiting for input
+read input
+getStudentFile
+}
+updateArray() {
+amount=`wc -l < lists/classList.txt`
+index=0
+while [ $index -lt $amount ]; do
+	extraClass[$index]="Exists!"
+	index=`expr $index + 1`
+done
+while [ $index -le 10 ]; do
+	extraClass[$index]="Class does not exist yet!"
+	index=`expr #index + 1`
+done
+}
 ### For when prof will add a class
-extraClass1="Exists!";extraClass2="Exists!";extraClass3="Exists!";extraClass4="Class does not exist yet!";extraClass5="Class does not exist yet!";extraClass6="Class does not exist yet!";extraClass7="Class does not exist yet!";extraClass8="Class does not exist yet!";extraClass9="Class does not exist yet!";extraClass10="Class does not exist yet!"
+extraClass[0]="Exists!"
+extraClass[1]="Exists!"
+extraClass[2]="Exists!"
+extraClass[3]="Class does not exist yet!"
+extraClass[4]="Class does not exist yet!"
+extraClass[5]="Class does not exist yet!"
+extraClass[6]="Class does not exist yet!"
+extraClass[7]="Class does not exist yet!"
+extraClass[8]="Class does not exist yet!"
+extraClass[9]="Class does not exist yet!"
+updateArray
 file="DNE"
-getStudentFile # Calling method
+showClasses
+#echo $file
 export file # Export path to student list to selected class
-./addStudent.sh # Call script
+echo "What would you like to do."
+echo "1: Add student to class"
+echo "2: Edit student in class"
+read choice
+case $choice in 
+	1)
+	./addStudent.sh
+	;;
+	2)
+	./editStudent.sh
+	;;
+esac

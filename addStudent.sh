@@ -11,15 +11,13 @@ lastID=`sed -n '$p' tmpStudentIDs`
 lastEmail=`sed -n '$p' tmpStudentEmails`
 occID=`grep -i $lastID tmpStudentIDs | wc -l`
 occEmail=`grep -i $lastEmail tmpStudentEmails | wc -l`
-echo $occID
-echo $occEmail
-if [ $occID > 1 ] || [ $occEmail > 1 ]; then # If file contains $lastID
+if [ $occID -gt 1 ] || [ $occEmail -gt 1 ]; then # If file contains $lastID
 	echo `sed -n '$p' tmpStudentIDs`
 	echo "ID/Email exists already, add student?"
 	echo "Yes: 1"
 	echo "No: 2"
 	read choice
-	if [ $choice == 2 ]; then
+	if [ $choice -eq 2 ]; then
 		sed '$d' < $file > tmp # Delete last line save to tmp
 		mv tmp $file # rename tmp to $file
 	fi
@@ -40,13 +38,24 @@ echo "$lastName":"$firstName":"$studentID":"$studentEmail":"$studentPhone" >> $f
 checkDuplicates
 }
 addStudentCOLONS() {
-echo "Enter data seperated by colons"
 read info
 echo $info >> $file
 checkDuplicates
 }
+addStudentMULTIPLE() {
+echo "How many people would you like to enter?"
+read numOfStudents
+i=0
+echo $numOfStudents
+while [ $i -lt $numOfStudents ]
+do
+	i=`expr $i + 1` # Increment i
+	echo "Enter student: $i"
+	addStudentCOLONS # Call method $numOfStudents times
+done 
+}
 
-file=$1 # Capture export
+file=$file # Capture export
 if test -e $file ; then
 	echo "File Exists"
 else 
@@ -55,13 +64,20 @@ fi
 echo "How do you want to enter student data?"
 echo "1: Colon"
 echo "2: Individual fields"
+echo "3: Multiple People"
 read input
 case $input in
 	1)
+	echo "Enter data seperated by colons"
 	addStudentCOLONS # Call method to enter data by colons
 	;;
 	2)
 	addStudentFIELDS # Call method to enter data individualy
 	;;
+	3)
+	addStudentMULTIPLE # Call method to enter data for multiple people
+	;;
 esac
+rm tmpStudentIDs
+rm tmpStudentEmails
 sort -t':' -k1 $file -o $file  # Sort file by field one, store it back
