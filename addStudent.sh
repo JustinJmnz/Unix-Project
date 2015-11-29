@@ -56,6 +56,7 @@ done
 }
 
 file=$file # Capture export
+#echo $file
 if test -e $file ; then
 	echo "File Exists"
 else 

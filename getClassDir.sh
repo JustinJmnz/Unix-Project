@@ -128,7 +128,7 @@ while [ $index -lt $amount ]; do
 done
 while [ $index -le 10 ]; do
 	extraClass[$index]="Class does not exist yet!"
-	index=`expr #index + 1`
+	index=`expr $index + 1`
 done
 }
 ### For when prof will add a class
@@ -156,6 +156,6 @@ case $choice in
 	./addStudent.sh
 	;;
 	2)
-	./editStudent.sh
+	./searchStudent.sh "edit"
 	;;
 esac
