@@ -1,0 +1,3 @@
+student=$studentFound
+line=$lineNumber
+

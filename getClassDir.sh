@@ -106,7 +106,7 @@ case $input in
 	;;
 	[nN])
 	createClass
-	;;
+	;;	
 	*)
 	echo "Teachers can only teach up to 10 classes."
 	;;
@@ -119,6 +119,7 @@ cat -n "lists/classList.txt" # Display all classes in classList.txt
 read input
 getStudentFile
 }
+
 updateArray() {
 amount=`wc -l < lists/classList.txt`
 index=0
@@ -145,17 +146,27 @@ extraClass[9]="Class does not exist yet!"
 updateArray
 file="DNE"
 showClasses
-#echo $file
 export file # Export path to student list to selected class
-echo "What would you like to do."
-echo "1: Add student to class"
-echo "2: Edit student in class"
-read choice
-case $choice in 
-	1)
-	./addStudent.sh
-	;;
-	2)
-	./searchStudent.sh "edit"
-	;;
-esac
+if [ "$1" == "normal" ]; then 
+	echo "What would you like to do."
+	echo "1: Add student to class"
+	echo "2: Edit student in class"
+	echo "3: Remove student"
+	read choice
+	case $choice in 
+		1)
+		./addStudent.sh
+		;;
+		2)
+		./searchStudent.sh "edit"
+		;;
+		3)
+		./searchStudent.sh "remove"
+		;;
+	esac
+elif [ "$1" == "Add Grade" ]; then
+	./searchStudent.sh "Add Grade"
+elif [ "$1" == "Change Grade" ]; then
+	./searchStudent.sh "Change Grade"
+fi
+
