@@ -23,8 +23,21 @@ for i in ${!classes[@]}; do # Loop through array
 	lName=`echo "$student" | cut -d ':' -f 1` # Cut last name
 	fName=`echo "$student" | cut -d ':' -f 2` # Cut first name
 	SID=`echo "$student" | cut -d ':' -f 3` # Cut Student ID
-	## HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe
+	p=1
+	#while [ "$p" -le "$num" ];do
+		#originalLast=`sed -n "$j"p "lists/${classes[$i]}_StudentList.txt" | cut -d ':' -f 1`
+		#originalFirst=`sed -n "$j"p "lists/${classes[$i]}_StudentList.txt" | cut -d ':' -f 2`
+		originalSID=`sed -n "$p"p lists/${classes[$i]}_StudentList.txt | cut -d ':' -f 3`
+		if grep -q "$originalSID" tmp"$i".txt;then # Check if file contains string already
+			echo "FILE CONTAINS ME ALREADY"	
+		else
+			echo "ELSE"
+			echo "$SID:$lName:$fName" >> grades/${classes[$i]}_G.txt
+		fi
+		#p=`expr $p + 1`
+	#done
     j=`expr $j + 1`
+	p=`expr $p + 1`
   done
 done
 for i in ${!classes[@]}; do # Loop through array
