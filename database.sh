@@ -17,10 +17,15 @@ for i in ${!classes[@]}; do # Loop through array
   cat lists/${classes[$i]}_StudentList.txt | cut -d ':' -f 1-3 > tmp"$i".txt
   num=`wc -l tmp"$i".txt | cut -d ' ' -f 1` # Get number of students
   j=0
-  if [ `sed -n "1p" grades/${classes[$i]}_G.txt` == "SID:LastName:FirstName:" ]; then
-	echo "true"
+  numOfOccur=`grep -c "SID:" grades/${classes[$i]}_G.txt`
+  echo '-------------------------'
+  echo $numOfOccur
+  echo '-------------------------'
+  if [ "$numOfOccur" -gt 0 ]; then # Not first time calling function
+	echo "Header already there"
   else
-	echo "SID:LastName:FirstName:" >> grades/${classes[$i]}_G.txt 
+	echo "Adding header to file"
+	echo "SID:LastName:FirstName:" >> grades/${classes[$i]}_G.txt # Add it to file
   fi
   while [ "$j" -lt "$num" ]; do # While less than the amount of students in tmp"$i".txt
 	n=`expr $j + 1` # Used to print line numbers
