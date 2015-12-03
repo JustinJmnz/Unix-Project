@@ -1,5 +1,4 @@
 SID:LastName:FirstName:
-0962355:Abuznied:Abdel
-0987654:Jimenez:Andres
-0962344:Jimenez:Justin
-0965265:Larry:Enea
+0962355:Abuznied:Abdel:
+0962344:Jimenez:Justin:
+0965265:Larry:Enea:
