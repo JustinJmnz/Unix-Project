@@ -55,18 +55,17 @@ sort -t':' -k1 $file -o $file  # Sort file by field one, store it back
 createDB
 updateDB
 clear
-echo "What do you want to do?"
-echo "1: Add Grade"
-echo "2: Change Grade"
-read input
-case $input in
-	1)
+#echo "What do you want to do?"
+#echo "1: Add Grade"
+#read input
+#case $input in
+#	1)
 	./getClassDir.sh "Add Grade"
-	;;
-	2)
-	./getClassDir.sh "Change Grade"
-	;;
-	*)
-	echo "Not a choice"
-	;;
-esac
+#	;;
+#	2)
+#	./getClassDir.sh "Change Grade"
+#	;;
+#	*)
+#	echo "Not a choice"
+#	;;
+#esac

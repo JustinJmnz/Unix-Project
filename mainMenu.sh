@@ -1,6 +1,7 @@
 echo "What do you want to do?"
-echo "1: Add/Edit/Remove Student from a class or create a new class"
-echo "2: Change/Add/Calculate grades from a class"
+echo "1: Add/Edit Student from a class or create a new class"
+echo "2: Add grades from a class"
+echo "3: Calculate grades"
 read input
 case $input in 
 	1)
@@ -8,5 +9,12 @@ case $input in
 	;;
 	2)
 	./database.sh
+	;;
+	3)
+	./calculateGrades.sh
+	;;
+	*)
+	echo "Invalid input"
+	exit 1
 	;;
 esac
