@@ -41,18 +41,17 @@ for i in ${!rows[@]}; do
 	echo ${rows[$i]} > tmp.txt # Put row into file
 	if [ $count -eq 1 ]; then
 		value=$title':'
-		rows[$i]=`sed "s/$/$value/" tmp.txt`
+#		rows[$i]=`sed "s/$/$value/" tmp.txt`
 		count=`expr $count + 1`
 		continue
 	elif [ $count -eq $lineNumber ]; then
 		value=$grade
-		echo "HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe"
 		rows[$i]=`sed -n '1p' tmp.txt | awk -F ':' -vv="$value" -vc="$inCol" '{$c=v}1' | sed 's/ /:/g'`
 		count=`expr $count + 1`
 		continue
 	else
 		value=':'
-		rows[$i]=`sed -n '1p' tmp.txt | awk -F ':' `
+#		rows[$i]=`sed "s/$/$value/" tmp.txt`
 		count=`expr $count + 1`
 		continue
 	fi	
@@ -78,18 +77,13 @@ echo "You are going to add the grade of $grade to $fName $lName for "$title", is
 read choice
 if [ "$choice" == "y" ] || [ "$choice" == "Y" ]; then
 	awk -F ':' "{print NF}" grades/"$class"_G.txt > foo.txt
-	echo "--------"
 	numCol=`sed -n '1p' foo.txt` # Get the total number of columns 
 	rm foo.txt
-	echo $numCol
-	echo "-------"
 	occur=`awk 'BEGIN{ FS=":" } { for(fn=1;fn<=NF;fn++) {print fn" = "$fn;}; exit 0;}' grades/"$class"_G.txt | grep -c "$title"` # Checking to see if $title is already in file
 	inCol=`awk 'BEGIN{ FS=":"} { for(fn=1;fn<=NF;fn++) {print fn" = "$fn;}; exit 0;}' grades/"$class"_G.txt | grep -n "$title" | cut -d ':' -f 1` # Get the colunm that $value occurs in 
 	if [ "$occur" -eq 1 ]; then
-		echo "Assignment at column $inCol"
 		insertGrade
 	else
-		echo "Add assignment in $numCol"
 		addNewField
 	fi
 fi

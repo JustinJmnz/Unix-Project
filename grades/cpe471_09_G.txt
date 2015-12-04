@@ -1,4 +1,4 @@
-SID:LastName:FirstName:
-0962355:Abuznied:Abdel:
-0962344:Jimenez:Justin:
-0965265:Larry:Enea:
+SID:LastName:FirstName:hw01:hw01:
+
+
+0965265:Larry:Enea:50:
