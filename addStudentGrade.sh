@@ -21,6 +21,46 @@ for i in ${!rows[@]}; do # Go through all rows
     rows[$i]=`sed "s/$/$value/" tmp.txt` # Append to end of row
     count=`expr $count + 1`
 done
+for i in ${!rows[@]}; do # Displaying rows[]
+	echo ${rows[$i]} >> foo.txt
+done
+mv foo.txt grades/"$class"_G.txt
+}
+
+insertGrade() { # $inCol=column to insert to
+line=`wc -l grades/"$class"_G.txt | cut -d ' ' -f 1`
+i=0
+j=1
+while [ $i -lt $line ]; do # Put all rows in rows[]
+    rows[$i]=`sed -n "$j"p grades/"$class"_G.txt`
+    i=`expr $i + 1`
+    j=`expr $j + 1`
+done
+count=1
+for i in ${!rows[@]}; do
+	echo ${rows[$i]} > tmp.txt # Put row into file
+	if [ $count -eq 1 ]; then
+		value=$title':'
+		rows[$i]=`sed "s/$/$value/" tmp.txt`
+		count=`expr $count + 1`
+		continue
+	elif [ $count -eq $lineNumber ]; then
+		value=$grade
+		echo "HEREEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEe"
+		rows[$i]=`sed -n '1p' tmp.txt | awk -F ':' -vv="$value" -vc="$inCol" '{$c=v}1' | sed 's/ /:/g'`
+		count=`expr $count + 1`
+		continue
+	else
+		value=':'
+		rows[$i]=`sed -n '1p' tmp.txt | awk -F ':' `
+		count=`expr $count + 1`
+		continue
+	fi	
+done
+for i in ${!rows[@]}; do
+	echo ${rows[$i]} >> foo.txt
+done
+mv foo.txt grades/"$class"_G.txt
 }
 
 clear
@@ -47,13 +87,10 @@ if [ "$choice" == "y" ] || [ "$choice" == "Y" ]; then
 	inCol=`awk 'BEGIN{ FS=":"} { for(fn=1;fn<=NF;fn++) {print fn" = "$fn;}; exit 0;}' grades/"$class"_G.txt | grep -n "$title" | cut -d ':' -f 1` # Get the colunm that $value occurs in 
 	if [ "$occur" -eq 1 ]; then
 		echo "Assignment at column $inCol"
+		insertGrade
 	else
 		echo "Add assignment in $numCol"
+		addNewField
 	fi
-	#addNewField	
 fi
-for i in ${!rows[@]}; do # Displaying rows[]
-	echo ${rows[$i]}
-done
-#mv backup.txt "$class"_G.txt
-#rm tmp.txt
+rm tmp.txt
