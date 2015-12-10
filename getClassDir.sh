@@ -168,5 +168,7 @@ elif [ "$1" == "Add Grade" ]; then
 	./searchStudent.sh "Add Grade"
 elif [ "$1" == "Change Grade" ]; then
 	./searchStudent.sh "Change Grade"
+elif [ "$1" == "Calc Grades" ]; then
+	./calculateGrades.sh
 fi
 

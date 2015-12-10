@@ -1,4 +1,4 @@
-SID:LastName:FirstName:hw01:hw02:
-0962355:Abuznied:Abdel:75::
-0962344:Jimenez:Justin:100:100:
-0965265:Larry:Enea:89:100:
+SID:LastName:FirstName:hw01:hw02:exam01:quiz01:proj01:hT:eT:qT:pT:
+0962355:Abuznied:Abdel:75:85:79:88:99:160:79:88:99:
+0962344:Jimenez:Justin:100:94:88:99:95:194:88:99:95:
+0965265:Larry:Enea:89:100:100:97:96:189:100:97:96:

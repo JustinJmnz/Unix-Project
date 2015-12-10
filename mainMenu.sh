@@ -11,7 +11,7 @@ case $input in
 	./database.sh
 	;;
 	3)
-	./calculateGrades.sh
+	./getClassDir.sh "Calc Grades"
 	;;
 	*)
 	echo "Invalid input"

@@ -1,11 +1,7 @@
-copyFiles() { # Copy files from grades/ to finalGrades/
 totalClasses=`wc -l lists/classList.txt | cut -d ' ' -f 1`
-index=1
-while [ $index -le $totalClasses ]; do
-	class=`sed -n "$index"p lists/classList.txt | cut -d ' ' -f 1`
-	cp grades/"$class"_G.txt finalGrades/"$class"_FG.txt 
-	index=`expr $index + 1`
-done
-}
-
-copyFiles
+class=`echo $file | cut -d '/' -f 2 | cut -d '_' -f 1,2`
+cp grades/"$class"_G.txt finalGrades/"$class"_FG.txt 
+awk -f script.awk finalGrades/"$class"_FG.txt > tmp.txt # Call awk script to calculate final grades
+mv tmp.txt finalGrades/"$class"_FG.txt 
+export class
+./gradePolicy.sh
